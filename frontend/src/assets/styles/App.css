@@ -1,0 +1,144 @@
+/* Animation de chargement style Google */
+@keyframes logoRotate {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) rotateY(-180deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotateY(0deg);
+  }
+}
+
+@keyframes logoGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3),
+                0 0 40px rgba(99, 102, 241, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.6),
+                0 0 60px rgba(99, 102, 241, 0.4);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.logo-animate {
+  animation: logoRotate 0.8s ease-out forwards;
+  perspective: 1000px;
+}
+
+.logo-container {
+  animation: logoGlow 3s ease-in-out infinite;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%);
+}
+
+.logo-container img {
+  border-radius: 50%;
+  box-shadow: inset 0 0 15px rgba(59, 130, 246, 0.2);
+}
+
+/* Animation d'apparition du formulaire */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-container {
+  animation: slideUp 0.8s ease-out 0.3s forwards;
+  opacity: 0;
+}
+
+/* Spinner de chargement circulaire */
+@keyframes spinnerRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinnerTrack {
+  0%, 100% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+}
+
+.spinner {
+  animation: spinnerRotate 2s linear infinite;
+  display: inline-block;
+}
+
+.spinner-circle {
+  animation: spinnerTrack 1.5s ease-in-out infinite;
+  stroke-linecap: round;
+}
+
+/* Overlay de chargement fullscreen */
+@keyframes fadeInOverlay {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(4px);
+  }
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeInOverlay 0.3s ease-out forwards;
+}
+
+.loading-spinner-wrapper {
+  background: white;
+  border-radius: 50%;
+  padding: 40px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-spinner-large {
+  animation: spinnerRotate 2s linear infinite;
+}
+
+.loading-spinner-large circle {
+  animation: spinnerTrack 1.5s ease-in-out infinite;
+  stroke-linecap: round;
+}

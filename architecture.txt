@@ -1,0 +1,187 @@
+SuiviCim/
+│
+├── backend/
+│   └── [À explorer]
+│
+└── frontend/
+    ├── Configuration & Build
+    │   ├── vite.config.js                 # Configuration Vite pour React
+    │   ├── eslint.config.js               # Configuration ESLint
+    │   ├── .eslintrc.cjs                  # ESLint legacy config
+    │   ├── .prettierrc                    # Configuration Prettier
+    │   ├── tailwind.config.js             # Configuration Tailwind CSS
+    │   ├── postcss.config.js              # Configuration PostCSS
+    │   ├── package.json                   # Dépendances & scripts npm
+    │   ├── index.html                     # Point d'entrée HTML
+    │   └── README.md                      # Documentation
+    │
+    ├── Environment & Git
+    │   ├── .env                           # Variables d'environnement (local)
+    │   ├── .env.example                   # Template variables d'environnement
+    │   └── .gitignore                     # Fichiers à ignorer par Git
+    │
+    ├── public/                            # Ressources statiques
+    │   └── [Fichiers publics]
+    │
+    └── src/                               # Code source
+        │
+        ├── app/                           # Point d'entrée application
+        │   ├── main.jsx                   # Initialisation React DOM
+        │   └── App.jsx                    # Composant racine App (routing)
+        │
+        ├── assets/                        # Ressources (images, styles, icônes)
+        │   ├── icons/                     # Icônes SVG/PNG
+        │   ├── images/                    # Images du projet (logo.jpg)
+        │   └── styles/                    # Feuilles de style CSS
+        │       ├── index.css              # Styles globaux & Tailwind reset
+        │       ├── App.css                # Styles du composant App (animations)
+        │       ├── forms.css              # Styles spécifiques aux formulaires
+        │       └── dashboard.css          # Styles du dashboard (animations, responsive)
+        │
+        ├── components/                    # Composants réutilisables
+        │   ├── layout/                    # Composants de mise en page
+        │   │   └── [Composants layout]
+        │   └── ui/                        # Design system & composants UI
+        │       ├── Button.jsx             # Bouton avec variants (primary, secondary, outline)
+        │       ├── FormGroup.jsx          # Conteneur grid pour grouper des inputs
+        │       ├── Input.jsx              # Champ texte/email/date réutilisable
+        │       ├── Select.jsx             # Dropdown avec gestion d'erreurs
+        │       └── Textarea.jsx           # Zone de texte multiligne
+        │
+        ├── config/                        # Configuration application
+        │   └── [Fichiers de config]
+        │
+        ├── features/                      # Modules fonctionnels par domaine métier
+        │   ├── auth/
+        │   │   └── ConnectionForm.jsx     # Formulaire de connexion avec validation + redirection
+        │   ├── dashboard/
+        │   │   ├── Dashboard.jsx          # Page principale du tableau de bord
+        │   │   └── components/
+        │   │       ├── DashboardHeader.jsx    # En-tête avec logo, profil, notifications
+        │   │       ├── DashboardSidebar.jsx   # Menu latéral responsive
+        │   │       ├── DashboardStats.jsx     # Cartes de statistiques (KPIs)
+        │   │       └── DashboardCards.jsx     # Cartes d'actions rapides
+        │   ├── data-entry/
+        │   │   └── DataEntryForm.jsx      # Saisie des données véhicule
+        │   ├── modification/
+        │   │   ├── ModificationForm.jsx   # Formulaire de modification de données
+        │   │   └── ModificationActions.jsx # Actions (Annuler/Valider)
+        │   └── suppression/
+        │       └── DeleteDataForm.jsx     # Formulaire de suppression avec confirmation
+        │
+        ├── hooks/                         # Hooks React personnalisés
+        │   └── [Hooks custom à développer]
+        │
+        ├── services/                      # Appels API & services métier
+        │   └── [Services API à développer]
+        │
+        ├── store/                         # État global (Redux, Zustand, etc.)
+        │   └── [Store configuration]
+        │
+        └── utils/                         # Fonctions utilitaires
+            └── [Utilitaires réutilisables]
+
+
+DESCRIPTION GÉNÉRALE:
+════════════════════
+
+📦 FRONTEND (React + Vite + Tailwind CSS)
+   • Framework: React 19.2.0
+   • Bundler: Vite 7.2.4
+   • Styling: Tailwind CSS 4.1.18
+   • Linter: ESLint 9.39.1
+   • Formatter: Prettier
+   • Router: React Router v7.13.0
+   • Build: `npm run build` → dossier dist/
+   • Dev: `npm run dev` → serveur HMR local
+   • Lint: `npm run lint` → vérifier le code
+
+STACK TECHNOLOGIQUE:
+═══════════════════
+✅ React 19.2.0 avec hooks
+✅ React Router DOM pour la navigation
+✅ Tailwind CSS pour le styling utility-first
+✅ Vite pour le bundling & HMR
+✅ PostCSS + @tailwindcss/postcss
+
+STRUCTURE LOGIQUE:
+══════════════════
+
+1️⃣  Configuration Layer
+    └─ vite.config.js, eslint.config.js, tailwind.config.js, postcss.config.js
+
+2️⃣  Entry Point
+    └─ src/app/ → main.jsx + App.jsx (routing)
+
+3️⃣  UI Layer (Design System)
+    ├─ components/ui/ → Composants réutilisables (Button, Input, Select, Textarea, FormGroup)
+    ├─ components/layout/ → Composants de mise en page
+    └─ assets/styles/ → Feuilles CSS globales (Tailwind reset)
+
+4️⃣  Business Logic
+    ├─ services/ → Appels API (à développer)
+    ├─ hooks/ → Logique partagée (à développer)
+    └─ utils/ → Fonctions utilitaires (à développer)
+
+5️⃣  State Management
+    └─ store/ → État global (à implémenter)
+
+6️⃣  Features (Modules métier)
+    ├─ auth/ → Authentification & connexion
+    ├─ data-entry/ → Saisie de nouvelles données
+    ├─ modification/ → Modification de données existantes
+    └─ suppression/ → Suppression de données
+
+7️⃣  Static Resources
+    └─ public/ → Fichiers accessibles directement (favicon, etc.)
+
+ROUTES ACTUELLES:
+═════════════════
+/              → ConnectionForm (page de connexion avec logo animé)
+/dashboard     → Dashboard (tableau de bord avec statistiques et actions)
+/saisie        → DataEntryForm (saisie des données)
+/modification  → ModificationForm (modification des données)
+/suppression   → DeleteDataForm (suppression des données)
+
+COMPOSANTS UI DISPONIBLES:
+════════════════════════════
+📌 Button         - Bouton avec variants (primary, secondary, outline) + loader spinner
+📌 Input          - Champ texte réutilisable avec validation
+📌 Select         - Dropdown avec gestion d'erreurs
+📌 Textarea       - Zone de texte multiligne
+📌 FormGroup      - Conteneur grid pour grouper des inputs (2 colonnes par défaut)
+
+COMPOSANTS DASHBOARD:
+═════════════════════
+📊 Dashboard          - Conteneur principal avec layout sidebar + content
+📊 DashboardHeader    - En-tête sticky avec logo, profil utilisateur, notifications
+📊 DashboardSidebar   - Menu latéral avec navigation responsive (mobile overlay)
+📊 DashboardStats     - 4 cartes KPI (véhicules, modifications, suppressions, en attente)
+📊 DashboardCards     - 4 cartes d'actions rapides vers les modules
+
+STYLING:
+═══════
+• Tailwind CSS pour tous les styles (utility-first)
+• Classes prédéfinies dans les composants UI
+• Breakpoint responsive: md: (768px)
+• Coloration: blue (primary), gray (secondary), red (danger)
+
+ANIMATIONS IMPLÉMENTÉES:
+═══════════════════════
+🎬 Logo Rotating    - Rotation 3D du logo avec apparition (0.8s)
+🎬 Logo Glow        - Effet de lueur pulsante autour du logo (3s infinite)
+🎬 Form SlideUp     - Le formulaire glisse vers le haut (0.8s delay 0.3s)
+🎬 Loading Overlay  - Overlay fullscreen avec spinner circulaire et blur
+🎬 Dashboard FadeIn - Apparition progressive des éléments du dashboard
+🎬 Sidebar SlideIn  - Sidebar qui glisse depuis la gauche (0.3s)
+🎬 Stats SlideIn    - Cartes de stats qui apparaissent en cascade (100ms delay)
+🎬 Cards SlideIn    - Cartes d'actions qui apparaissent en cascade (100ms delay)
+
+FLUX DE CONNEXION:
+══════════════════
+1. Utilisateur accède à "/" (ConnectionForm)
+2. Remplissage du formulaire (identifiant, mot de passe, centre)
+3. Clique sur "Se connecter"
+4. Overlay fullscreen avec spinner circulaire (1.5s)
+5. Redirection vers "/dashboard"
+6. Affichage du tableau de bord avec animations
