@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "../../../assets/images/logo.jpg";
 
 export default function DashboardHeader({ 
   userInfo, 
@@ -52,8 +51,11 @@ export default function DashboardHeader({
           </button>
           
           <div className="items-center hidden gap-2 pl-2.5 border-l border-gray-200/60 md:flex md:gap-2.5">
-            <div className="p-1.5 bg-gradient-to-br from-blue-100 to-blue-50 rounded-lg">
-              <img src={logo} alt="CIM" className="object-contain w-8 h-8 md:w-9 md:h-9" />
+            <div className="p-1.5 bg-gradient-to-br from-blue-100 to-blue-50 rounded-lg flex items-center justify-center">
+              <svg aria-hidden="true" className="w-6 h-6 md:w-7 md:h-7 text-blue-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="2" y="2" width="20" height="20" rx="5" fill="currentColor" />
+                <path d="M8 11.5h8M8 14.5h8" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </div>
             <div>
               <h1 className="text-xs font-black tracking-wider text-gray-900 md:text-sm">CIM</h1>

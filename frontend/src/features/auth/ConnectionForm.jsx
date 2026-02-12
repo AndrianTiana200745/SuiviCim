@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import Input from "../../components/ui/Input";
 import Select from "../../components/ui/Select";
 import Button from "../../components/ui/Button";
-import logo from "../../assets/images/logo.jpg";
 import "../../assets/styles/App.css";
 
 export default function ConnectionForm() {
@@ -73,8 +72,20 @@ export default function ConnectionForm() {
         <div className="p-8 bg-white shadow-xl rounded-2xl">
           {/* Header */}
           <div className="mb-8 text-center">
-            <div className="w-24 h-24 mx-auto mb-6 logo-container">
-              <img src={logo} alt="CIM Logo" className="object-contain w-20 h-20 logo-animate" />
+            <div className="flex items-center justify-center w-20 h-20 mx-auto mb-6">
+              <svg
+                width="80"
+                height="80"
+                viewBox="0 0 80 80"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                {/* Cadenas (Lock) */}
+                <rect x="24" y="36" width="32" height="28" rx="2" stroke="#3B82F6" strokeWidth="2" fill="none" />
+                <path d="M 32 36 V 24 Q 32 16 40 16 Q 48 16 48 24 V 36" stroke="#3B82F6" strokeWidth="2" fill="none" />
+                <circle cx="40" cy="48" r="3" fill="#3B82F6" />
+                <line x1="40" y1="51" x2="40" y2="58" stroke="#3B82F6" strokeWidth="2" />
+              </svg>
             </div>
             <h1 className="text-3xl font-bold text-gray-800">Connexion</h1>
             <p className="mt-2 text-sm text-gray-500">Accédez à votre tableau de bord</p>
