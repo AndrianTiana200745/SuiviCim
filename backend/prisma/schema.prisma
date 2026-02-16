@@ -1,15 +1,104 @@
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
   provider = "prisma-client-js"
-  url      = env("DATABASE_URL")
 }
 
-model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
+enum Centres {
+  Ambohidahy
+  Ankadimbahoaka
+  Antsirabe
+}
+
+enum Roles {
+  Admin
+  User
+}
+
+enum Types {
+  Immatriculation
+  Immatriculation_Mutation
+  Mutation
+}
+
+enum TypeImp {
+  Carte
+  Attestation
+}
+
+model Utilisateur {
+  id           Int       @id @default(autoincrement())
+  nom          String    @unique
+  motDePasse   String
+  role         Roles     @default(User)
+  createdAt    DateTime  @default(now())
+
+  centres      Centre[]
+}
+
+model Centre {
+  id             Int          @id @default(autoincrement())
+  designation    Centres      @default(Ambohidahy)
+
+  utilisateurId  Int
+  utilisateur    Utilisateur  @relation(fields: [utilisateurId], references: [id])
+}
+
+model Dossier {
+  id                Int                @id @default(autoincrement())
+  reference         String             @unique
+  datePaiement      DateTime
+  dateRdv           DateTime
+
+  vehiculeId        Int
+  vehicule          Vehicule           @relation(fields: [vehiculeId], references: [id])
+
+  operateursSaisie  OperateurSaisie[]
+  operations        Operation[]
+  impressions       Impression[]
+  protocoles        Protocole[]
+}
+
+model Operation {
+  id         Int     @id @default(autoincrement())
+  type       Types   @default(Immatriculation)
+
+  dossierId  Int
+  dossier    Dossier @relation(fields: [dossierId], references: [id])
+}
+
+model OperateurSaisie {
+  id         Int     @id @default(autoincrement())
+  nom        String 
+
+  dossierId  Int
+  dossier    Dossier @relation(fields: [dossierId], references: [id])
+}
+
+model Vehicule {
+  id            Int       @id @default(autoincrement())
+  numero        String    @unique
+  proprietaire  String
+
+  dossiers      Dossier[]
+}
+
+model Impression {
+  id         Int      @id @default(autoincrement())
+  type       TypeImp  @default(Attestation)
+
+  dossierId  Int
+  dossier    Dossier  @relation(fields: [dossierId], references: [id])
+}
+
+model Protocole {
+  id           Int      @id @default(autoincrement())
+  designation  String
+  dateArrivee  DateTime
+
+  dossierId    Int
+  dossier      Dossier  @relation(fields: [dossierId], references: [id])
 }
