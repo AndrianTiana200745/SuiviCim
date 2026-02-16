@@ -1,22 +1,60 @@
 const prisma = require('../prisma/client');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-exports.createUser = async ({ email, password }) => {
-  const hash = await bcrypt.hash(password, 10);
-  return prisma.user.create({
-    data: { email, password: hash }
+exports.createUser = async ({ nom, motDePasse, role }) => {
+  const hashedPassword = await bcrypt.hash(motDePasse, 10);
+
+  return prisma.utilisateur.create({
+    data: {
+      nom,
+      motDePasse: hashedPassword,
+      role,
+    },
   });
 };
 
-exports.loginUser = async ({ email, password }) => {
-  const user = await prisma.user.findUnique({ where: { email } });
-  if (!user) throw new Error('Utilisateur non trouvé');
+exports.authenticateUser = async ({ nom, motDePasse }) => {
+  const user = await prisma.utilisateur.findUnique({ where: { nom } });
 
-  const valid = await bcrypt.compare(password, user.password);
-  if (!valid) throw new Error('Mot de passe incorrect');
+  if (!user) {
+    throw new Error('Utilisateur non trouvé');
+  }
 
-  return jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+  const isPasswordValid = await bcrypt.compare(motDePasse, user.motDePasse);
+
+  if (!isPasswordValid) {
+    throw new Error('Mot de passe incorrect');
+  }
+
+  const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, {
+    expiresIn: '1h',
+  });
+
+  return { token, user };
 };
 
-exports.getUsers = () => prisma.user.findMany();
+exports.getUserById = async (id) => {
+  return prisma.utilisateur.findUnique({ where: { id } });
+};
+
+exports.getAllUsers = async () => {
+  return prisma.utilisateur.findMany();
+};
+
+exports.updateUser = async (id, { nom, motDePasse, role }) => {
+  const updateData = {};
+
+  if (nom) updateData.nom = nom;
+  if (motDePasse) updateData.motDePasse = await bcrypt.hash(motDePasse, 10);
+  if (role) updateData.role = role;
+
+  return prisma.utilisateur.update({
+    where: { id },
+    data: updateData,
+  });
+};
+
+exports.deleteUser = async (id) => {
+  return prisma.utilisateur.delete({ where: { id } });
+};

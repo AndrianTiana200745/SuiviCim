@@ -1,10 +1,10 @@
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 generator client {
   provider = "prisma-client-js"
+  engineType = "binary"
 }
 
 enum Centres {
@@ -87,8 +87,9 @@ model Vehicule {
 }
 
 model Impression {
-  id         Int      @id @default(autoincrement())
-  type       TypeImp  @default(Attestation)
+  id              Int      @id @default(autoincrement())
+  type            TypeImp  @default(Attestation)
+  dateImpression  DateTime @default(now())
 
   dossierId  Int
   dossier    Dossier  @relation(fields: [dossierId], references: [id])
