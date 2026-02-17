@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  # Service PostgreSQL
+  db:
+    image: postgres:16-alpine
+    container_name: suivicim-db
+    environment:
+      POSTGRES_USER: cimuser
+      POSTGRES_PASSWORD: lolipop
+      POSTGRES_DB: suivicimdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cimuser -d suivicimdb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - suivicim-network
+
+  # Service Backend
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: suivicim-backend
+    environment:
+      DATABASE_URL: "postgresql://cimuser:lolipop@db:5432/suivicimdb"
+      SHADOW_DATABASE_URL: "postgresql://cimuser:lolipop@db:5432/suivicimdb"
+      JWT_SECRET: "super_secret_key"
+      PORT: 3000
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: sh -c "npm exec prisma migrate deploy && node src/server.js"
+    networks:
+      - suivicim-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  suivicim-network:
+    driver: bridge
