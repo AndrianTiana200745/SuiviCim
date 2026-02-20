@@ -4,7 +4,7 @@ const operateurSaisieController = require('../controllers/operateurSaisieControl
 const authMiddleware = require('../middlewares/authMiddleware');
 
 router.post('/', authMiddleware, operateurSaisieController.createOperateurSaisie);
-router.get('/', authMiddleware, operateurSaisieController.getAllOperateurSaisies);
+router.get('/', authMiddleware, operateurSaisieController.getAllOperateursSaisie);
 router.get('/:id', authMiddleware, operateurSaisieController.getOperateurSaisieById);
 router.put('/:id', authMiddleware, operateurSaisieController.updateOperateurSaisie);
 router.delete('/:id', authMiddleware, operateurSaisieController.deleteOperateurSaisie);

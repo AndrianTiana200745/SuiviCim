@@ -11,10 +11,11 @@ exports.createCentre = async (req, res) => {
 
 exports.getAllCentres = async (req, res) => {
   try {
-    const centres = await centreService.getAllCentres();
+    const centres = await centreService.getAllCentre();
     res.json(centres);
   } catch (err) {
-    res.status(500).json({ message: 'Erreur serveur' });
+    console.error("Erreur centres ", err);
+    res.status(500).json({ message: err.message });
   }
 };
 

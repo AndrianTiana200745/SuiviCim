@@ -1,5 +1,4 @@
-const { utilisateur } = require('../prisma/client');
-const prisma = require('../prismaClient');
+const prisma = require('../prisma/client');
 
 exports.getAllCentre = async () => {
   return prisma.centre.findMany();

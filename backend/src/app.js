@@ -1,8 +1,8 @@
+const cors = require('cors');
 const express = require('express');
 const app = express();
 const userRoutes = require('./routes/userRoutes');
 const dossierRoutes = require('./routes/dossierRoutes');
-const operateurSaisieRoutes = require('./routes/operateurSaisieRoutes');
 const impressionRoutes = require('./routes/impressionRoutes');
 const centreRoutes = require('./routes/centreRoutes');
 const operateurSaisieRoutes = require('./routes/operateurSaisieRoutes');
@@ -10,6 +10,10 @@ const operationRoutes = require('./routes/operationRoutes');
 const vehiculeRoutes = require('./routes/vehiculeRoutes');
 
 // Middleware pour parser le JSON
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true
+}));
 app.use(express.json());
 
 // Routes principales

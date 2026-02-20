@@ -10,4 +10,7 @@ export default defineConfig({
     datasource: {
         url: databaseUrl,
     },
+    migrations: {
+        seed: 'node src/prisma/seed.js',
+    }
 });

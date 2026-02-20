@@ -28,4 +28,28 @@ exports.getOperateurSaisieById = async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: 'Erreur serveur' });
   }
-};  
+};
+
+exports.updateOperateurSaisie = async (req, res) => {
+  try {
+    const updatedOperateurSaisie = await operateurSaisieService.updateOperateurSaisie(req.params.id, req.body);
+    if (!updatedOperateurSaisie) {
+      return res.status(404).json({ message: 'Opérateur de saisie non trouvé' });
+    }
+    res.json(updatedOperateurSaisie);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+exports.deleteOperateurSaisie = async (req, res) => {
+  try {
+    const deletedOperateurSaisie = await operateurSaisieService.deleteOperateurSaisie(req.params.id);
+    if (!deletedOperateurSaisie) {
+      return res.status(404).json({ message: 'Opérateur de saisie non trouvé' });
+    }
+    res.json({ message: 'Opérateur de saisie supprimé' });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};

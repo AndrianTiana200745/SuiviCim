@@ -10,6 +10,7 @@ export default function Select({
       <label className="block text-sm font-semibold text-gray-700 mb-2">
         {label}
       </label>
+
       <div className="relative">
         <select
           value={value}
@@ -25,21 +26,28 @@ export default function Select({
             }
           `}
         >
-          <option value="" disabled>— Sélectionner —</option>
+          <option value="" disabled>
+            — Sélectionner —
+          </option>
+
           {options.map((opt) => (
-            <option key={opt} value={opt}>
-              {opt}
+            <option key={opt.value} value={opt.value}>
+              {opt.label}
             </option>
           ))}
         </select>
+
         <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>
         </div>
       </div>
+
       {error && (
-        <p className="text-red-600 text-xs font-medium mt-1.5">{error}</p>
+        <p className="text-red-600 text-xs font-medium mt-1.5">
+          {error}
+        </p>
       )}
     </div>
   );

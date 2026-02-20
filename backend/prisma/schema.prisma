@@ -7,12 +7,6 @@ generator client {
   engineType = "binary"
 }
 
-enum Centres {
-  Ambohidahy
-  Ankadimbahoaka
-  Antsirabe
-}
-
 enum Roles {
   Admin
   User
@@ -36,15 +30,15 @@ model Utilisateur {
   role         Roles     @default(User)
   createdAt    DateTime  @default(now())
 
-  centres      Centre[]
+  centreId     Int
+  centre     Centre  @relation(fields: [centreId], references: [id])
 }
 
 model Centre {
   id             Int          @id @default(autoincrement())
-  designation    Centres      @default(Ambohidahy)
+  designation    String       @unique
 
-  utilisateurId  Int
-  utilisateur    Utilisateur  @relation(fields: [utilisateurId], references: [id])
+  Utilisateur    Utilisateur[]
 }
 
 model Dossier {

@@ -18,20 +18,25 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Installer dumb-init pour le signal handling
-RUN apk add --no-cache dumb-init
+# Installer dumb-init et netcat (nc) pour le check de la DB
+RUN apk add --no-cache dumb-init netcat-openbsd
 
-# Copier les fichiers des dépendances du builder
+# Copier les fichiers du builder
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/prisma ./prisma
 
-# Copier le code source
+# Copier le code source et l'entrypoint
 COPY src ./src
+COPY entrypoint.sh ./
+
+RUN chmod +x entrypoint.sh
 
 # Créer un utilisateur non-root pour la sécurité
 RUN addgroup -g 1001 -S nodejs && adduser -S nodejs -u 1001
 USER nodejs
+
+
 
 # Exposer le port
 EXPOSE 3000
@@ -40,6 +45,5 @@ EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
     CMD node -e "require('http').get('http://localhost:3000', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)}, (e) => {throw e})"
 
-# Démarrer l'application avec dumb-init pour gérer correctement les signaux
-ENTRYPOINT ["dumb-init", "--"]
-CMD ["node", "src/server.js"]
+# Démarrer l'application avec dumb-init et l'entrypoint
+ENTRYPOINT ["dumb-init", "--", "./entrypoint.sh"]

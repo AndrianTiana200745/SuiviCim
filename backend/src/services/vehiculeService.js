@@ -1,4 +1,4 @@
-const prisma = require('../prismaClient');
+const prisma = require('../prisma/client');
 
 exports.getAllVoiture = async () => {
   return prisma.voiture.findMany();

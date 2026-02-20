@@ -2,7 +2,7 @@ const prisma = require('../prisma/client');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-exports.createUser = async ({ nom, motDePasse, role }) => {
+exports.createUser = async ({ nom, motDePasse, role, centreId }) => {
   const hashedPassword = await bcrypt.hash(motDePasse, 10);
 
   return prisma.utilisateur.create({
@@ -10,6 +10,7 @@ exports.createUser = async ({ nom, motDePasse, role }) => {
       nom,
       motDePasse: hashedPassword,
       role,
+      centreId,
     },
   });
 };
@@ -42,12 +43,13 @@ exports.getAllUsers = async () => {
   return prisma.utilisateur.findMany();
 };
 
-exports.updateUser = async (id, { nom, motDePasse, role }) => {
+exports.updateUser = async (id, { nom, motDePasse, role, centreId }) => {
   const updateData = {};
 
   if (nom) updateData.nom = nom;
   if (motDePasse) updateData.motDePasse = await bcrypt.hash(motDePasse, 10);
   if (role) updateData.role = role;
+  if (centreId) updateData.centreId = centreId;
 
   return prisma.utilisateur.update({
     where: { id },
